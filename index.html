@@ -16,30 +16,12 @@
 </head>
 <body>
   <script type="text/javascript">
- 	  const learner = new Learner({docId:"test"})
-    learner.addGUI(document.getElementById("dataset"))
-    //learner.addClassifier(3)
-    // let y = [0]
-    const recordXY = (event)=> {
-      learner.newExample([event.clientX, event.clientY], instruments.getMappedOutputs());
-    }
-    document.getElementById("input").addEventListener("click", recordXY);
-    //Callback for result
-    learner.onOutput = (output)=> {
-      //y = output
-      instruments.updateMappedOutputs(output)
-      console.log(output)
-    };
-    learner.setModelOptions({
-      numHiddenNodes:8
-    });
 
 
     //OUPUT
     var origin = "https://mimicproject.com/libs";
-    // origin = "http://127.0.0.1:4200/libs"
     const instruments = new MaxiInstruments(origin);
-    var synth, sampler;
+    var synth;
     const launchSynth = ()=> {
       instruments.guiElement = document.getElementById("synths");
       instruments.loadModules().then(()=> {
@@ -59,6 +41,7 @@
           {s:168, l:24, p:b7},
         ];
         synth.setSequence(synthSeq)
+<<<<<<< HEAD
 
         learner.addRegression(instruments.getNumMappedOutputs(), false, 10);
         learner.onOutput = (data)=> {
@@ -67,6 +50,10 @@
         instruments.setLoop(192,24,192/2)
         instruments.setTempo(86)
         //sampler.setSequence(drumSeq);
+=======
+        instruments.setLoop(192,24,192/2)
+        instruments.setTempo(86)
+>>>>>>> f65313270213d424066f29c019790348d802ee73
       });
     }
 </script>
