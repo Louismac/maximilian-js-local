@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <script src="./enable-threads.js"></script>
   <!-- <script crossorigin src = "http://127.0.0.1:4200/libs/learner.v.0.4.js"></script>
   <script crossorigin src = "http://127.0.0.1:4200/libs/maxiInstruments.v.0.7.1.js"></script> -->
   <script crossorigin src = "https://mimicproject.com/libs/learner.v.0.4.js"></script>
@@ -59,34 +60,13 @@
         ];
         synth.setSequence(synthSeq)
 
-        sampler = instruments.addSampler();
-        let origin = document.location.origin
-        if(origin.includes("file"))
-        {
-          origin = "http://127.0.0.1:4200"
-        }
-        sampler.mapped = ["pan_0", "pan_1", "pan_2"];
-        sampler.loadSample(origin + "/sounds/909b.wav", 0);
-        sampler.loadSample(origin + "/sounds/909closed.wav", 1);
-        sampler.loadSample(origin + "/sounds/909.wav", 2);
-        let drumSeq = [
-           {pitch:0, start:0},
-           {pitch:0, start:18},
-           {pitch:0, start:42},
-           {pitch:0, start:54},
-           {pitch:2, start:24},
-           {pitch:2, start:72},
-        ];
-        for(let i = 0; i < 32; i++) {
-          drumSeq.push({pitch:1, start:i*6});
-        }
         learner.addRegression(instruments.getNumMappedOutputs(), false, 10);
         learner.onOutput = (data)=> {
           instruments.updateMappedOutputs(data);
         };
         instruments.setLoop(192,24,192/2)
         instruments.setTempo(86)
-        sampler.setSequence(drumSeq);
+        //sampler.setSequence(drumSeq);
       });
     }
 </script>
