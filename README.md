@@ -1,6 +1,6 @@
-# Maximilian.js Self Hosted Libraries
+# Hosting maximilian.js 
 
-If you want to run [maximilian.js](https://mimicproject.com/guides/maximJS) (the Web Audio version of [maximilian](https://github.com/micknoise/Maximilian) on something other than the mimicproject.com website, you've come to the right place.
+If you want to run [maximilian.js](https://mimicproject.com/guides/maximJS) (the Web Audio version of [maximilian](https://github.com/micknoise/Maximilian) )on something other than the mimicproject.com website, you've come to the right place.
 
 To do thus, you will need to access following 4 files.
 
