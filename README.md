@@ -4,15 +4,24 @@ If you want to run [maximilian.js](https://mimicproject.com/guides/maximJS) on s
 
 To do thus, you will need to access the libraries.
 
+* ``maximilian.v.0.1.js``
+
+* ``index.mjs``
+
+* ``ringbuf.js``
+
+* ``maxi-processor.js``
+
 There are some specfic headers related to **SharedArrayBuffers** that mean this will only work under certain circumstances. We give examples of either running this fully locally serving the files yourself, or using the versions hosted on mimicproject.com
 
 ## Running on GitHub Pages
 
 You can see a demo of this repository running [here](https://louismac.github.io/maximilian-js-local/)
 
-Include the libraries
+Include the libraries, and also the ``enable-threads.js`` file (this injects in some headers and is neccessary to get this to work when you are not in control of how the page is served)
 
 ``<script crossorigin src = "./maximilian.v.0.1.js"></script>``
+``<script crossorigin src = "./enable-threads.js"></script>``
 
 Tell ``maximilian.js`` where to find libraries
 
@@ -24,8 +33,6 @@ initAudioEngine("https://louismac.github.io/maximilian-js-local").then((dspEngin
   maxi.setAudioCode("myAudioScript");
 })
 ```
-
-##
 
 ## Running Locally
 
