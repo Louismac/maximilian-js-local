@@ -28,7 +28,7 @@
  <!-- Main Javascript code goes here -->
   <script language="javascript">
     let maxi;
-    initAudioEngine("http://localhost:4200").then((dspEngine)=>{
+    initAudioEngine(location.origin).then((dspEngine)=>{
       maxi = dspEngine;
       setup();
       //Get audio code from script element
