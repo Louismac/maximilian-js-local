@@ -23,7 +23,7 @@ Include the libraries, and also the ``enable-threads.js`` file (this injects in 
 ``<script crossorigin src = "./maximilian.v.0.1.js"></script>``
 ``<script crossorigin src = "./enable-threads.js"></script>``
 
-Tell ``maximilian.js`` where to find libraries
+Tell ``maximilian.js`` where to find libraries. You can put in the url of **your own GitHub pages repo**.
 
 ```
 let maxi;
