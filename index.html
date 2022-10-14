@@ -37,7 +37,6 @@
 
     ///////YOU CAN IGNORE ME - CODE FOR SCOPES///////
     let setup = ()=> {
-      maxi.hush()
       Nexus.context = maxi.audioWorkletNode.context;
       new Nexus.Oscilloscope('oscilloscope', {'size': [400,100]}).connect(maxi.audioWorkletNode);
       new Nexus.Spectrogram('spectrogram', {'size': [400,100]}).connect(maxi.audioWorkletNode);
