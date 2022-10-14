@@ -12,7 +12,7 @@ To do thus, you will need to access the libraries.
 
 * ``maxi-processor.js``
 
-There are some specfic headers related to **SharedArrayBuffers** that mean this will only work under certain circumstances. We give examples of either running this fully locally serving the files yourself, or using the versions hosted on mimicproject.com
+There are some specfic headers related to [SharedArrayBuffers](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SharedArrayBuffer#security_requirements) that mean this will only work under certain circumstances. We give examples of either running this fully locally serving the files yourself, or using the versions hosted on mimicproject.com
 
 ## Running on GitHub Pages
 
