@@ -36,7 +36,7 @@ initAudioEngine("https://louismac.github.io/maximilian-js-local").then((dspEngin
 })
 ```
 
-## Running Locally
+## Running Locally
 
 To run on your local machine 
 
@@ -61,7 +61,7 @@ initAudioEngine("https://mimicproject.com/libs").then((dspEngine)=>{
 
 You can change the urls appropriately if you are hosting elsewhere
 
-## Locally hosted library
+### Locally hosted library
 
 The recommended way to do this is to use the python server we have provided (server.py).
 
@@ -86,7 +86,7 @@ initAudioEngine("http://localhost:4200").then((dspEngine)=>{
 })
 ```
 
-## Run demo locally!
+### Run demo locally!
 
 Download this repo. Then when in the project folder in the terminal run the command below.
 
