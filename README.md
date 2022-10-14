@@ -20,8 +20,10 @@ You can see a demo of this repository running [here](https://louismac.github.io/
 
 Include the libraries, and also the ``enable-threads.js`` file (this injects in some headers and is neccessary to get this to work when you are not in control of how the page is served)
 
-``<script crossorigin src = "./maximilian.v.0.1.js"></script>``
-``<script crossorigin src = "./enable-threads.js"></script>``
+``
+<script crossorigin src = "./maximilian.v.0.1.js"></script>
+<script crossorigin src = "./enable-threads.js"></script>
+``
 
 Tell ``maximilian.js`` where to find libraries. You can put in the url of **your own GitHub pages repo**.
 
