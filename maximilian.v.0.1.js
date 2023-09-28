@@ -1,12 +1,9 @@
-// 
-// const origin = ;
-// //const origin = "http://localhost:4200/libs";
 
-var initAudioEngine = (origin = "https://mimicproject.com/libs")=>{
+var initAudioEngine = (origin = document.location.origin+"/libs")=>{
   return new Promise((resolve, reject)=>{
     //Dynamically load modules
-    import("./index.mjs").then((semaEngine)=>{
-      import("./ringbuf.js").then((RingBuffer)=>{
+    import(origin + "/index.mjs").then((semaEngine)=>{
+      import(origin + "/ringbuf.js").then((RingBuffer)=>{
         //Setup sema engine
         const Engine = semaEngine.Engine
         const Learner = semaEngine.Learner
@@ -89,31 +86,49 @@ var initAudioEngine = (origin = "https://mimicproject.com/libs")=>{
             maxi.pushDataToSharedBuffer(id, data);
           }
 
-          maxi.setAudioCode = async (location, newSetup = true)=>{
-            const executeCode = (userCode)=> {
+          async function getCode(location) {
+            //Try script element
+            let scriptElement = document.getElementById(location)
+            if(scriptElement !== null)
+            {
+              return scriptElement.innerHTML
+            }
+            else
+            {
+              //Else try url
+              console.log("try url")
+              function isValidURL(url) {
+                try {
+                  new URL(url);
+                  return true;
+                } catch (error) {
+                  return false;
+                }
+              }
+              if(isValidURL(location)) {
+                let response = await fetch(location);
+                if (response.ok) {
+                  let text = await response.text();
+                  console.log("executing http code")
+                  return text
+                }
+              }
+              else {
+                //Else use string literal
+                console.log("executing literal code")
+                return location
+              }
+            }
+          }
+
+          maxi.setAudioCode = async (location,name)=>{
+            const executeCode = (name, userCode)=> {
+              console.log(name, typeof(userCode), userCode)
               userCode = userCode.replace(/Maximilian/g, "Module");
+              //Mimic site adds in some stuff for consoles, causes errors, remove it
+              userCode = userCode.replace(/parent.postMessage\(\[\"console\".*\"\*\"\)/g, "");
               dspCode = {}
-              if(!newSetup) {
-                dspCode.setup = `(q)=>{
-                  let createDSPLoop = ()=> {` +
-                    userCode +
-                    ` return play;
-                  }
-                  q.play = createDSPLoop();
-                  return q;
-                }`;
-                dspCode.loop = `(q, inputs, mem) => {
-                  var sig = q.play(inputs);
-                  if(Array.isArray(sig)) {
-                    for(let i = 0; i < sig.length; i++) {
-                      this.dacOut(sig[i], i);
-                    }
-                  } else {
-                    this.dacOutAll(sig);
-                  }
-                }`
-                dspCode.keepq = true;
-              } else {
+              if(name === undefined) {
                 dspCode.setup = `()=>{
                   let q = this.newq();
                   let createDSPLoop = ()=> {` +
@@ -125,39 +140,18 @@ var initAudioEngine = (origin = "https://mimicproject.com/libs")=>{
                 }`
                 dspCode.loop = `(q, inputs, mem) => {
                   var sig = q.play(inputs);
-                  if(Array.isArray(sig)) {
-                    for(let i = 0; i < sig.length; i++) {
-                      this.dacOut(sig[i], i);
-                    }
-                  } else {
-                    this.dacOutAll(sig);
-                  }
+                  return sig
                 }`
+              } else {
+                dspCode.loop = {}
+                dspCode.loop[name] = userCode
               }
-
               setTimeout(()=>{
-                maxi.eval(dspCode, false)
+                maxi.eval(dspCode)
               },50);
             }
-            //Try script element
-            let scriptElement = document.getElementById(location)
-            if(scriptElement)
-            {
-              executeCode(scriptElement.innerHTML)
-            }
-            else
-            {
-              //Else try url
-              let response = await fetch(location);
-              if (response.ok) {
-                let text = await response.text();
-                executeCode(text)
-              } else {
-                //Else use string literal
-                console.log("HTTP-Error: " + response.status);
-                executeCode(location)
-              }
-            }
+            let code = await getCode(location)
+            executeCode(name, code) 
           }
           resolve(maxi)
         })
@@ -165,3 +159,13 @@ var initAudioEngine = (origin = "https://mimicproject.com/libs")=>{
     })
   })
 }
+
+// const regex = /(let|var|const)\s+play\s*=\s*\([^)]*\)\s*=>\s*{([^}]*)}/g;
+// let code = await getCode(location)
+// let playFunction = code.match(regex)[0]
+// console.log("playFunction",playFunction)
+// let otherCode = code.replace(regex,"")
+// maxi.setAudioCode("setup", otherCode)
+// setTimeout(()=>{
+//     maxi.setAudioCode("signal", playFunction)
+//   },100);
