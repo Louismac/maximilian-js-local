@@ -61,6 +61,33 @@ initAudioEngine("https://mimicproject.com/libs").then((dspEngine)=>{
 
 You can change the urls appropriately if you are hosting elsewhere
 
+### Running on p5.js Web Editor 
+
+You can see can example [here](https://editor.p5js.org/Louismac/sketches/odTpTQuv1)
+
+Include the hosted library in the ``index.html``
+
+```
+<script crossorigin src = "https://mimicproject.com/libs/maximilian.v.0.1.js"></script>
+```
+
+Run the code in the ``sketch.js``
+
+```
+let maxi;
+initAudioEngine("https://mimicproject.com/libs").then((dspEngine)=>{
+  maxi = dspEngine;
+  //Get audio code from script element
+  maxi.setAudioCode(`
+    var osc1 = new Maximilian.maxiOsc();
+    var osc2 = new Maximilian.maxiOsc();
+    function play() {
+      return osc1.saw(100) + osc2.saw(100.2)
+    }
+  `);
+})
+```
+
 ### Locally hosted library
 
 The recommended way to do this is to use the python server we have provided (server.py).
